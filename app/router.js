@@ -62,6 +62,9 @@ Router.map(function() {
       this.route('edit', { path: '/:functionaris_id/edit' });
     });
   });
+  this.route('personeelsdatabank', function() {
+    this.route('personeelsaantallen');
+  });
 });
 
 export default Router;
