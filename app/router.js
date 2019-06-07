@@ -64,6 +64,9 @@ Router.map(function() {
   });
   this.route('personeelsdatabank', function() {
     this.route('personeelsaantallen');
+    this.route('personeelsaantallen-VTE');
+    this.route('voltijdsequivalenten');
+    this.route('aantalwerknemers');
   });
 });
 
