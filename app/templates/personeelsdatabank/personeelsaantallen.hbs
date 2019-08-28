@@ -2,8 +2,8 @@
 
 <div class="container-flex--contain">
 	<div class="u-border--light--bottom">
-	  <div class="u-padding--round--small">
-	    <h1 class="h4 u-spacer--tiny">Personeelsdatabank Gemeente Gent{{bestuurseenheid.classificatie.label}} {{bestuurseenheid.naam}}</h1>
+	  <div class="u-padding--trl--small">
+	    <h1 class="h4 u-spacer--tiny">Personeelsbeheer Gemeente Gent {{!-- {{bestuurseenheid.classificatie.label}} {{bestuurseenheid.naam}} --}}</h1>
 	    <div class="grid">
 	      <div class="col--6-12 col--1-1--s">
 	        <p class="text-light">Overzicht aantallen</p>
@@ -11,6 +11,15 @@
 	      <div class="col--6-12 col--1-1--s u-align-right--tablet-portrait-up">
 	      </div>
 	    </div>
+			<div class="alert alert--tiny alert--warning u-spacer--top--tiny">
+			  <div class="alert__icon" aria-hidden="true"></div>
+			  <div class="alert__content">
+			    <div class="alert__title">Actie vereist</div>
+			    <div class="alert__message">
+			      <p>Gelieve de aantallen die niet actueel zijn voor dit jaar aan te passen.</p>
+			    </div>
+			  </div>
+			</div>
 	  </div>
 	</div>
 	<div class="container-flex--scroll u-padding--round">
@@ -34,7 +43,10 @@
 	        </div>
 	        <div class="col--4-12 col--1-1--m u-align-right--tablet-portrait-up">
 	        	{{#link-to "personeelsdatabank.voltijdsequivalenten" class="button button--small button--narrow u-spacer--tiny"}}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
-	          <p class="text-fade smaller">Laatst bewerkt op 24.08.2018</p>
+	        	<p class="text-fade smaller">
+		        	<span>Laatst aangepast op 31.12.2018 </span>
+			        <label class="pill pill--primary-yellow">Aantallen niet actueel</label>
+			      </p>
 		      </div>
 	      </div>
 	    </div>
@@ -43,7 +55,7 @@
 	  <div class="u-spacer">
 	    <div class="u-padding--tb--small u-border--light--bottom">
 	      <div class="grid">
-	        <div class="col--8-12 col--1-1--m">
+	        <div class="col--6-12 col--1-1--m">
 	          <h2 class="h5 u-spacer--tiny">Aantal werknemers &mdash; koppen</h2>
 	          <ul class="inline-list inline-list--bordered small">
 	            <li>
@@ -57,9 +69,12 @@
 				      </li>
 	          </ul>
 	        </div>
-	        <div class="col--4-12 col--1-1--m u-align-right--tablet-portrait-up">
+	        <div class="col--6-12 col--1-1--m u-align-right--tablet-portrait-up">
 	        	{{#link-to "personeelsdatabank.aantalwerknemers" class="button button--small button--narrow u-spacer--tiny"}}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
-	          <p class="text-fade smaller">Laatst aangepast op 24.08.2018</p>
+	        	<p class="text-fade smaller">
+	          	<span>Laatst aangepast op 25.12.2019 </span>
+	          	<label class="pill">Aantallen actueel</label>
+	          </p>
 		      </div>
 	      </div>
 	    </div>
