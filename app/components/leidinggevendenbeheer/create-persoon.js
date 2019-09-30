@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 import { A } from '@ember/array';
 import { isBlank } from '@ember/utils';
 import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+
 const maleId = '5ab0e9b8a3b2ca7c5e000028';
 const femaleId = '5ab0e9b8a3b2ca7c5e000029';
 const CreatePersoon = Component.extend({
@@ -22,8 +22,6 @@ const CreatePersoon = Component.extend({
     this.set('birthDate', new Date(now.getFullYear()-21,now.getMonth(), now.getDay()));
   },
 
-  isMale: equal('geslacht', maleId),
-  isFemale: equal('geslacht', femaleId),
   /**
    * check if rijksregisternummer is valid
    */
@@ -83,13 +81,14 @@ const CreatePersoon = Component.extend({
     let persoon;
     this.set('saveError', '');
     try {
+      const rrn = yield this.loadOrCreateRijksregister.perform();
+      const geboorte = yield this.loadOrCreateGeboorte.perform();
       persoon = store.createRecord('persoon', {
         gebruikteVoornaam: this.voornaam,
         achternaam: this.familienaam,
         alternatieveNaam: this.roepnaam,
-        geslacht: yield store.findRecord('geslacht-code', this.geslacht),
-        identificator: yield this.loadOrCreateRijksregister.perform(),
-        geboorte: yield this.loadOrCreateGeboorte.perform()
+        identificator: rrn,
+        geboorte: geboorte
       });
       const result = yield persoon.save();
       this.onCreate(result);
@@ -108,7 +107,7 @@ const CreatePersoon = Component.extend({
 
 CreatePersoon.reopen({
   // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
-  requiredFields: [ 'geslacht', 'voornaam', 'familienaam', "rijksregisternummer" ],
+  requiredFields: [ 'voornaam', 'familienaam', "rijksregisternummer" ],
   male: maleId,
   female: femaleId
 });

@@ -8,6 +8,16 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('login');
+  this.route('switch-login');
+  this.route('mock-login');
+
+  this.route('contact');
+
+  this.route('legaal', function() {
+    this.route('disclaimer');
+    this.route('cookieverklaring');
+  });
+
   this.route('mandatenbeheer', function(){
     this.route('mandatarissen', function(){
       this.route('new');
@@ -32,42 +42,35 @@ Router.map(function() {
       this.route('edit', { path: '/:id' });
     });
   });
-  this.route('contact');
-  this.route('route-not-found', {
-    path: '/*wildcard'
-  });
-  this.route('mock-login');
 
-  this.route('legaal', function() {
-    this.route('disclaimer');
-    this.route('cookieverklaring');
-  });
   this.route('berichtencentrum', function() {
     this.route('berichten', function() {
-      this.route('conversatie', { path: ':id' }, function() {});
+      this.route('conversatie', { path: '/:id' }, function() {});
     });
   });
+
   this.route('leidinggevendenbeheer', function() {
     this.route('bestuursfuncties', function() {
-      this.route('contact-info', {
-        path: '/:id/contact-info/'
+      this.route('bestuursfunctie', { path: '/:bestuursfunctie_id' }, function() {
+        this.route('contact-info');
+        this.route('functionarissen', function() {
+          this.route('new', function() {});
+          this.route('edit', { path: '/:functionaris_id/edit' });
+        });
       });
-    });
-    this.route('functionarissen', { path: '/:bestuursfunctie_id/functionarissen' }, function() {
-      this.route('new', function() {
-        this.route('select-persoon');
-        this.route('provide-details',  { path: '/:persoon_id/provide-details' });
-        this.route('create-persoon');
-      });
-      this.route('edit', { path: '/:functionaris_id/edit' });
     });
   });
+
   this.route('personeelsdatabank', function() {
     this.route('personeelsaantallen');
-    this.route('personeelsaantallen-VTE');
     this.route('voltijdsequivalenten');
     this.route('aantalwerknemers');
   });
+
+  this.route('route-not-found', {
+    path: '/*wildcard'
+  });
+
 });
 
 export default Router;

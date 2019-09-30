@@ -10,13 +10,39 @@ export default Route.extend(AuthenticatedRouteMixin, {
     startDate: { refreshModel: true }
   },
 
-  getBestuursorganen: async function(bestuurseenheidId){
-    const bestuursorganen = await this.store.query('bestuursorgaan', {'filter[bestuurseenheid][id]': bestuurseenheidId });
-    const organenInTijd = await Promise.all(bestuursorganen.map(orgaan => this.getBestuursorganenInTijdFromStartDate(orgaan.get('id'), this.startDate)));
-    return organenInTijd.filter(orgaan => orgaan);
+  beforeModel() {
+    if (!this.currentSession.canAccessMandaat)
+      this.transitionTo('index');
   },
 
-  getBestuursorganenInTijdFromStartDate: async function(bestuursorgaanId, startDate){
+  async model(params){
+    this.startDate = params.startDate;
+    const bestuurseenheid = await this.get('currentSession.group');
+
+    return RSVP.hash({
+      bestuurseenheid: bestuurseenheid,
+      bestuursorganen: this.getBestuursorganenInTijdByStartDate(bestuurseenheid.get('id')),
+      bestuursperioden: this.getBestuursperioden(bestuurseenheid.get('id')),
+      startDate: this.startDate
+    });
+  },
+
+  /*
+   * Returns bestuursorgaan in tijd starting on the given start date
+   * for all bestuursorganen of the given bestuurseenheid.
+  */
+  getBestuursorganenInTijdByStartDate: async function(bestuurseenheidId){
+    const bestuursorganen = await this.store.query('bestuursorgaan', {
+      'filter[bestuurseenheid][id]': bestuurseenheidId,
+      'filter[heeft-tijdsspecialisaties][:has:bevat]': true // only organs with a political mandate
+    });
+    const organenStartingOnStartDate = await Promise.all( bestuursorganen.map( (orgaan) => {
+      return this.getBestuursorgaanInTijdByStartDate(orgaan.get('id'), this.startDate);
+    }));
+    return organenStartingOnStartDate.filter(orgaan => orgaan); // filter null values
+  },
+
+  getBestuursorgaanInTijdByStartDate: async function(bestuursorgaanId, startDate){
     const queryParams = {
       page: { size: 1 },
       sort: '-binding-start',
@@ -30,32 +56,15 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return organen.firstObject;
   },
 
-  getBestuursorgaanWithBestuursperioden: async function(bestuurseenheidId){
-    const bestuursorganen = await this.store.query('bestuursorgaan', {sort: '-binding-start', 'filter[bestuurseenheid][id]': bestuurseenheidId });
-    const organenInTijd = await Promise.all(bestuursorganen.map(orgaan => this.getBestuursorganenInTijd(orgaan.get('id'))));
-    return organenInTijd.firstObject;
-  },
-
-  getBestuursorganenInTijd: async function(bestuursorgaanId){
-    const organenInTijd = await this.store.query('bestuursorgaan', {'filter[is-tijdsspecialisatie-van][id]': bestuursorgaanId });
-    return organenInTijd;
-  },
-
-  beforeModel() {
-    if (!this.currentSession.canAccessMandaat)
-      this.transitionTo('index');
-  },
-
-  async model(params){
-    this.startDate = params.startDate;
-
-    const bestuurseenheid = await this.get('currentSession.group');
-    let model =  await RSVP.hash({
-      'bestuurseenheid': bestuurseenheid,
-      'bestuursorganen': this.getBestuursorganen(bestuurseenheid.get('id')),
-      'bestuursorgaanWithBestuursperioden': this.getBestuursorgaanWithBestuursperioden(bestuurseenheid.get('id')),
-      'startDate': this.startDate
-    });
-    return model;
+  /*
+   * Get all the bestuursorganen in tijd of a bestuursorgaan with at least 1 political mandate.
+   * @return Array of bestuursorganen in tijd ressembling the bestuursperiodes
+   */
+  getBestuursperioden: async function(bestuurseenheidId){
+    return (await this.store.query('bestuursorgaan', {
+      'filter[is-tijdsspecialisatie-van][bestuurseenheid][id]': bestuurseenheidId,
+      'filter[:has:bevat]': true // only organs with a political mandate
+    }));
   }
+
 });
