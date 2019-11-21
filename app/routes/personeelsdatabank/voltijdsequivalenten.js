@@ -20,9 +20,16 @@ export default Route.extend({
   },
 
   actions:{
-     updateStatus() {
+
+    updateStatus() {
       this.store.peekAll('employee-observation').forEach((o)=>{
         get(o, 'hasDirtyAttributes') && o.save();
+      });
+    },
+
+    rejectStatus() {
+      this.store.peekAll('employee-observation').forEach((o)=>{
+        get(o, 'hasDirtyAttributes') && o.rollbackAttributes();
       });
     }
   }
