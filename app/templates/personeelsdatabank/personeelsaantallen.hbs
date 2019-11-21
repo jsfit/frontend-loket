@@ -24,11 +24,12 @@
 	</div>
 	<div class="container-flex--scroll u-padding--round">
 
+  {{#each model.employeePeriodSlice as |eps| }}
 	  <div class="u-spacer">
 	    <div class="u-padding--tb--small u-border--light--bottom">
 	      <div class="grid">
 	        <div class="col--8-12 col--1-1--m">
-	          <h2 class="h5 u-spacer--tiny">Aantal Voltijds Equivalenten &mdash; VTE</h2>
+	          <h2 class="h5 u-spacer--tiny">{{eps.label}}</h2>
 	          <ul class="inline-list inline-list--bordered small">
 	            <li>
 				       		0 VTE's
@@ -42,7 +43,7 @@
 	          </ul>
 	        </div>
 	        <div class="col--4-12 col--1-1--m u-align-right--tablet-portrait-up">
-	        	{{#link-to "personeelsdatabank.voltijdsequivalenten" class="button button--small button--narrow u-spacer--tiny"}}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
+	        	{{#link-to "personeelsdatabank.voltijdsequivalenten" class="button button--small button--narrow u-spacer--tiny"  }}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
 	        	<p class="text-fade smaller">
 		        	<span>Laatst aangepast op 31.12.2018 </span>
 			        <label class="pill pill--primary-yellow">Aantallen niet actueel</label>
@@ -51,12 +52,11 @@
 	      </div>
 	    </div>
 	  </div>
-
 	  <div class="u-spacer">
 	    <div class="u-padding--tb--small u-border--light--bottom">
 	      <div class="grid">
 	        <div class="col--6-12 col--1-1--m">
-	          <h2 class="h5 u-spacer--tiny">Aantal werknemers &mdash; koppen</h2>
+	          <h2 class="h5 u-spacer--tiny">{{eps.label}}</h2>
 	          <ul class="inline-list inline-list--bordered small">
 	            <li>
 				       		0 koppen
@@ -80,5 +80,6 @@
 	    </div>
 	  </div>
 
+  {{/each}}
 	</div>
 </div>

@@ -53,5 +53,10 @@ inflector.irregular('form-input', 'form-inputs');
 inflector.irregular('inzending-voor-toezicht-form-version', 'inzending-voor-toezicht-form-versions');
 inflector.irregular('file-address', 'file-addresses');
 inflector.irregular('adres', 'adressen');
+inflector.irregular('employee-dataset','employee-datasets');
+inflector.irregular('employee-observation','employee-observations');
+inflector.irregular('educational-level','educational-levels');
+inflector.irregular('working-time-category','working-time-categories');
+inflector.irregular('employee-legal-status','employee-legal-statuses');
 // Meet Ember Inspector's expectation of an export
 export default {};

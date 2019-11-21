@@ -1,0 +1,97 @@
+      <tr>
+        <th style="max-width: 12rem;">Niveau A</th>
+        {{#each observationsSet1 as |obs|}}
+          <td>
+            {{input class="input-field input-field--block" type="number" value=(get obs currentKey)}}
+          </td>
+        {{/each}}
+        <td><strong>{{sumOfLevelA}}</strong></td>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Niveau B</th>
+        {{#each observationsSet2 as |obs|}}
+          <td>
+            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
+          </td>
+        {{/each}}
+        <td><strong>{{sumOfLevelB}}</strong></td>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Niveau C</th>
+        {{#each observationsSet3 as |obs|}}
+          <td>
+            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
+          </td>
+        {{/each}}
+        <td><strong>{{sumOfLevelC}}</strong></td>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Niveau D</th>
+        {{#each observationsSet4 as |obs|}}
+          <td>
+            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
+          </td>
+        {{/each}}
+        <td><strong>{{sumOfLevelD}}</strong></td>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Niveau E</th>
+        {{#each observationsSet5 as |obs|}}
+          <td>
+            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
+          </td>
+        {{/each}}
+        <td><strong>{{sumOfLevelE}}</strong></td>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Subtotaal</th>
+        <th><span class="text-fade">
+          {{subtotalColumn0}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn1}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn2}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn3}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn4}}<i class="fa fa-xs fa-male"></i> Mannen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn5}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn6}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
+
+        <th><span class="text-fade">
+          {{subtotalColumn7}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
+
+        <th><strong>
+          {{total}}
+
+        </strong></th>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Subtotaal</th>
+        <th colspan="2">{{subtotalColumn01}} vastbenoemd</th>
+        <th colspan="2">{{subtotalColumn23}} contractueel</th>
+        <th colspan="2">{{subtotalColumn45}} vastbenoemd</th>
+        <th colspan="2">{{subtotalColumn67}} contractueel</th>
+        <th><strong>{{total}}</strong></th>
+      </tr>
+
+      <tr>
+        <th style="max-width: 12rem;">Totaal</th>
+        <th colspan="4"><strong>{{totalVoltijds}} voltijds</strong></th>
+        <th colspan="4"><strong>{{totalDeeltijds}} deeltijds</strong></th>
+        <th><strong>{{total}}</strong></th>
+      </tr>
