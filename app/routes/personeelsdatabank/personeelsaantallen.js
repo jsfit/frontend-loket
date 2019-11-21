@@ -21,8 +21,9 @@ export default Route.extend({
       employeePeriodSlice: this.get('store').findAll('employee-period-slice')
     });
   },
+
   setupController(controller/*, model*/) {
-    this._super(...arguments)
+    this._super(...arguments);
     let totalNumberOfPersons = 0;
     let totalNumberOfFtes    = 0;
 
@@ -35,12 +36,13 @@ export default Route.extend({
 
 
      this.get('store').peekAll('employee-observation').forEach((obs)=> {
+
       let nop                 = get(obs, "numberOfPersons");
       let noftes              = get(obs, "numberOfFtes");
       let workingTimeCategory = get(obs, "workingTimeCategory.label")
 
-      nop    = nop? nop : 0;
-      noftes = noftes?noftes:0;
+      nop    = parseInt( nop   ? nop   : 0);
+      noftes = parseInt( noftes? noftes: 0) ;
 
       if( workingTimeCategory === "Deeltijds"){
         personsDeeltijds += nop;
