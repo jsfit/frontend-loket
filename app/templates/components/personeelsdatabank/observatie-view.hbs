@@ -1,52 +1,14 @@
-      <tr>
-        <th style="max-width: 12rem;">Niveau A</th>
-        {{#each observationsSet1 as |obs|}}
-          <td>
-            {{input class="input-field input-field--block" type="number" value=(get obs currentKey)}}
-          </td>
-        {{/each}}
-        <td><strong>{{sumOfLevelA}}</strong></td>
-      </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Niveau B</th>
-        {{#each observationsSet2 as |obs|}}
-          <td>
-            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
-          </td>
-        {{/each}}
-        <td><strong>{{sumOfLevelB}}</strong></td>
-      </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Niveau C</th>
-        {{#each observationsSet3 as |obs|}}
-          <td>
-            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
-          </td>
-        {{/each}}
-        <td><strong>{{sumOfLevelC}}</strong></td>
-      </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Niveau D</th>
-        {{#each observationsSet4 as |obs|}}
-          <td>
-            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
-          </td>
-        {{/each}}
-        <td><strong>{{sumOfLevelD}}</strong></td>
-      </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Niveau E</th>
-        {{#each observationsSet5 as |obs|}}
-          <td>
-            {{input class="input-field input-field--block" type="number"  value=(get obs currentKey)  }}
-          </td>
-        {{/each}}
-        <td><strong>{{sumOfLevelE}}</strong></td>
-      </tr>
+     {{#each stackObservations as |observationsSet|}}
+        <tr>
+          <th style="max-width: 12rem;">{{observationsSet.title}}</th>
+          {{#each observationsSet as |obs|}}
+            <td>
+              {{input class="input-field input-field--block" type="number" value=(get obs currentKey)}}
+            </td>
+          {{/each}}
+          <td><strong>{{observationsSet.sumOfLevel}}</strong></td>
+        </tr>
+     {{/each}}
 
       <tr>
         <th style="max-width: 12rem;">Subtotaal</th>

@@ -13,10 +13,10 @@ export default Component.extend({
 
   init(){
     this._super(...arguments);
-    this.dataFound();
+    this.getData();
   },
 
-  dataFound(){
+  getData(){
     let sortedObservations = [];
 
     this.store.peekAll('employee-observation').forEach((e, i)=>{
@@ -131,22 +131,29 @@ export default Component.extend({
   }),
 
   observationsSet2: computed("observations", function(){
-      return  get(this,"observations") && get(this,"observations").slice(8, 16);
+      return get(this,"observations") && get(this,"observations").slice(8, 16);
   }),
 
   observationsSet3: computed("observations", function(){
-      return  get(this,"observations") && get(this,"observations").slice(16, 24);
+      return get(this,"observations") && get(this,"observations").slice(16, 24);
   }),
 
   observationsSet4: computed("observations", function(){
-      return  get(this,"observations") && get(this,"observations").slice(24, 32);
+      return get(this,"observations") && get(this,"observations").slice(24, 32);
   }),
 
   observationsSet5: computed("observations", function(){
-      return  get(this,"observations") && get(this,"observations").slice(32, 40);
+      return get(this,"observations") && get(this,"observations").slice(32, 40);
   }),
 
-
+  stackObservations: computed("observationsSet1.@each.{numberOfFtes,numberOfPersons}",
+  "observationsSet2.@each.{numberOfFtes,numberOfPersons}",
+  "observationsSet3.@each.{numberOfFtes,numberOfPersons}",
+  "observationsSet4.@each.{numberOfFtes,numberOfPersons}",
+  "observationsSet5.@each.{numberOfFtes,numberOfPersons}",
+  "sumOfLevelA", "sumOfLevelB", "sumOfLevelC", "sumOfLevelD", "sumOfLevelE", function(){
+    return this.setLevelProperties();
+}),
 
   sumOfLevelA: computed("observationsSet1.@each.{numberOfFtes,numberOfPersons}", function(){
     return this.getRowSum(get(this, "observationsSet1"));
@@ -294,6 +301,32 @@ export default Component.extend({
     });
 
     return t;
+  },
+
+  setLevelProperties(){
+    let levelA = get(this, "observationsSet1"),
+        levelB = get(this, "observationsSet2"),
+        levelC = get(this, "observationsSet3"),
+        levelD = get(this, "observationsSet4"),
+        levelE = get(this, "observationsSet5");
+
+    set(levelA, "title", "Niveau A")
+    set(levelA, "sumOfLevel", get(this,"sumOfLevelA"));
+
+    set(levelB, "title", "Niveau B")
+    set(levelB, "sumOfLevel", get(this,"sumOfLevelB"));
+
+    set(levelC, "title", "Niveau C")
+    set(levelC, "sumOfLevel", get(this,"sumOfLevelC"));
+
+    set(levelD, "title", "Niveau D")
+    set(levelD, "sumOfLevel", get(this,"sumOfLevelD"));
+
+    set(levelE, "title", "Niveau E")
+    set(levelE, "sumOfLevel", get(this,"sumOfLevelE"));
+
+
+    return [ levelA, levelB, levelC, levelD, levelE ];
   }
 
 });
