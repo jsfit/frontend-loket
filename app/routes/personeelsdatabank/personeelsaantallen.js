@@ -24,34 +24,35 @@ export default Route.extend({
   setupController(controller/*, model*/) {
     this._super(...arguments)
     let totalNumberOfPersons = 0;
-    let totalNumberOfFtes = 0;
+    let totalNumberOfFtes    = 0;
 
-    let personsDeeltijds = 0;
-    let personsVoltijds = 0;
+    let personsDeeltijds     = 0;
+    let personsVoltijds      = 0;
 
-    let ftesDeeltijds = 0;
-    let ftesVoltijds = 0;
+    let ftesDeeltijds        = 0;
+    let ftesVoltijds         = 0;
 
 
 
      this.get('store').peekAll('employee-observation').forEach((obs)=> {
-      let nop = get(obs, "numberOfPersons");
-      let noftes = get(obs, "numberOfFtes");
+      let nop                 = get(obs, "numberOfPersons");
+      let noftes              = get(obs, "numberOfFtes");
       let workingTimeCategory = get(obs, "workingTimeCategory.label")
-      nop = nop? nop : 0;
+
+      nop    = nop? nop : 0;
       noftes = noftes?noftes:0;
 
       if( workingTimeCategory === "Deeltijds"){
         personsDeeltijds += nop;
-        ftesDeeltijds += noftes;
+        ftesDeeltijds    += noftes;
 
       } else {
         personsVoltijds += nop;
-        ftesVoltijds += noftes;
+        ftesVoltijds    += noftes;
       }
 
       totalNumberOfPersons += nop
-      totalNumberOfFtes += noftes
+      totalNumberOfFtes    += noftes
     });
 
     set(controller, 'totalNumberOfPersons', totalNumberOfPersons);

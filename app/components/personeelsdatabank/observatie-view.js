@@ -3,13 +3,11 @@ import {computed, get, set} from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  store: service(),
-
+  store  : service(),
   tagName: 'tbody',
 
   observations: null,
-  currentKey:"",
-  testing:0,
+  currentKey  : "",
 
   init(){
     this._super(...arguments);
@@ -20,11 +18,11 @@ export default Component.extend({
     let sortedObservations = [];
 
     this.store.peekAll('employee-observation').forEach((e, i)=>{
-      let gender  = e.get("sex.label"); //"Mannelijk" or "Vrouwelijk"
-      let el      = e.get("educationalLevel.label"); //"Niveau A" -> "Niveau E"
-      let ls      = e.get("legalStatus.label"); //"Contractueel" or "Vastbenoemd"
-      let wtc     = e.get("workingTimeCategory.label"); //"Voltijds" or "Deeltijds"
-      let index   = -1
+      let gender = e.get("sex.label");                  //"Mannelijk" or "Vrouwelijk"
+      let el     = e.get("educationalLevel.label");     //"Niveau A" -> "Niveau E"
+      let ls     = e.get("legalStatus.label");          //"Contractueel" or "Vastbenoemd"
+      let wtc    = e.get("workingTimeCategory.label");  //"Voltijds" or "Deeltijds"
+      let index  = -1
 
       if(gender === "Mannelijk" && ls === "Vastbenoemd" && wtc === "Voltijds" &&  el === "Niveau A"){
         index = 0;

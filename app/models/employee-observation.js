@@ -4,13 +4,13 @@ import { belongsTo } from 'ember-data/relationships';
 
 
 export default Model.extend({
-  label: attr(),
+  label          : attr(),
   numberOfPersons: attr(),
-  numberOfFtes: attr(),
+  numberOfFtes   : attr(),
 
-  sex: belongsTo('geslacht-code'),
+  sex                : belongsTo('geslacht-code'),
   employeePeriodSlice: belongsTo('employee-period-slice'),
-  educationalLevel: belongsTo('educational-level'),
+  educationalLevel   : belongsTo('educational-level'),
   workingTimeCategory: belongsTo('working-time-category'),
-  legalStatus: belongsTo('employee-legal-status'),
+  legalStatus        : belongsTo('employee-legal-status'),
 });

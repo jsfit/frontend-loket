@@ -4,7 +4,8 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 
 
 export default Model.extend({
-  label: attr(),
-  bestuursorganen: belongsTo('bestuursorgaan', { inverse: 'bestuurseenheid' }),
+  label              : attr(),
+
+  bestuursorganen    : belongsTo('bestuursorgaan', { inverse: 'bestuurseenheid' }),
   employeeObservation: hasMany('employee-observation'),
 });
