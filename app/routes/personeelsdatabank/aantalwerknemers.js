@@ -1,10 +1,15 @@
 import Route from '@ember/routing/route';
-import { get, set } from '@ember/object';
+import { get, set, computed } from '@ember/object';
 
 export default Route.extend({
+
+  isObservationsChange: computed("obs.@each.hasDirtyAttributes", function () {
+    return !get(this, "obs").filter((o) => get(o, 'hasDirtyAttributes')).length;
+  }),
+
   model() {
     let queryParams = {
-      page:{
+      page: {
         size: 40,
         number: 0
       },
@@ -26,26 +31,11 @@ export default Route.extend({
     let els = this.store.peekAll('employee-legal-status');
     let obs = this.store.peekAll('employee-observation');
 
-    set(controller, 'el' , el);
-    set(controller, 'wtc' , wtc);
-    set(controller, 'gender' , gender);
-    set(controller, 'obs' , obs);
-    set(controller, 'els' , els);
+    set(controller, 'el', el);
+    set(controller, 'wtc', wtc);
+    set(controller, 'gender', gender);
+    set(controller, 'obs', obs);
+    set(controller, 'els', els);
 
-  },
-
-  actions:{
-
-    updateStatus() {
-      this.store.peekAll('employee-observation').forEach((o)=>{
-        get(o, 'hasDirtyAttributes') && o.save();
-      });
-    },
-
-    rejectStatus() {
-      this.store.peekAll('employee-observation').forEach((o)=>{
-        get(o, 'hasDirtyAttributes') && o.rollbackAttributes();
-      });
-    }
   }
 });

@@ -1,11 +1,11 @@
 import Route from '@ember/routing/route';
-import {set, get} from '@ember/object';
-import {hash} from 'rsvp';
+import { set, get } from '@ember/object';
+import { hash } from 'rsvp';
 
 export default Route.extend({
   model() {
     let queryParams = {
-      page:{
+      page: {
         size: 40,
         number: 0
       },
@@ -33,40 +33,38 @@ export default Route.extend({
     let ftesDeeltijds = 0;
     let ftesVoltijds = 0;
 
+    this.get('store').peekAll('employee-observation').forEach((obs) => {
 
+      let nop = get(obs, "numberOfPersons");
+      let noftes = get(obs, "numberOfFtes");
+      let workingTimeCategory = get(obs, "workingTimeCategory.label")
 
-     this.get('store').peekAll('employee-observation').forEach((obs)=> {
+      nop = parseInt(nop ? nop : 0);
+      noftes = parseFloat(noftes ? noftes : 0);
+      if (workingTimeCategory === "Deeltijds") {
+        personsDeeltijds += nop;
+        ftesDeeltijds += noftes;
 
-       let nop = get(obs, "numberOfPersons");
-       let noftes = get(obs, "numberOfFtes");
-       let workingTimeCategory = get(obs, "workingTimeCategory.label")
+      } else {
+        personsVoltijds += nop;
+        ftesVoltijds += noftes;
+      }
 
-       nop = parseInt(nop ? nop : 0);
-       noftes = parseFloat(noftes ? noftes : 0).toFixed(2);
-
-       if (workingTimeCategory === "Deeltijds") {
-         personsDeeltijds += nop;
-         ftesDeeltijds += noftes;
-
-       } else {
-         personsVoltijds += nop;
-         ftesVoltijds += noftes;
-       }
-
-       totalNumberOfPersons += nop
-       totalNumberOfFtes += noftes
+      totalNumberOfPersons += nop
+      totalNumberOfFtes += noftes
     });
 
-    set(controller, 'totalNumberOfPersons', totalNumberOfPersons);
-    set(controller, 'totalNumberOfFtes', totalNumberOfFtes);
+    set(controller, 'totalNumberOfPersons', parseInt(totalNumberOfPersons));
+    set(controller, 'totalNumberOfFtes', totalNumberOfFtes.toFixed(2));
 
     set(controller, 'ftesWorkingTimeCategory', {
-      voltijds: ftesVoltijds,
-      deeltijds:  ftesDeeltijds
+      voltijds: ftesVoltijds.toFixed(2),
+      deeltijds: ftesDeeltijds.toFixed(2)
     });
+
     set(controller, 'personsWorkingTimeCategory', {
-      voltijds: personsVoltijds,
-      deeltijds: personsDeeltijds
+      voltijds: parseInt(personsVoltijds),
+      deeltijds: parseInt(personsDeeltijds)
     });
 
   }
