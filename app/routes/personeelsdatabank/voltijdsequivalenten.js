@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 
 export default Route.extend({
 
@@ -17,6 +17,23 @@ export default Route.extend({
       ].join(',')
     };
     return this.store.query('employee-observation', queryParams)
+  },
+
+  setupController(controller) {
+    this._super(...arguments);
+    let el = this.store.peekAll('educational-level').sortBy("label");
+    let gender = this.store.peekAll('geslacht-code').sortBy("label");
+    let wtc = this.store.peekAll('working-time-category');
+    let els = this.store.peekAll('employee-legal-status');
+    let obs = this.store.peekAll('employee-observation');
+
+    set(controller, 'el' , el);
+    set(controller, 'wtc' , wtc);
+    set(controller, 'gender' , gender);
+    set(controller, 'obs' , obs);
+    set(controller, 'els' , els);
+
+
   },
 
   actions:{

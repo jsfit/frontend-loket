@@ -1,59 +1,99 @@
-     {{#each stackObservations as |observationsSet|}}
-        <tr>
-          <th style="max-width: 12rem;">{{observationsSet.title}}</th>
-          {{#each observationsSet as |obs|}}
-            <td>
-              {{input class="input-field input-field--block" type="number" value=(get obs currentKey)}}
-            </td>
+  <table class="data-table data-table--matrix data-table--lined data-table--zebra">
+    <thead>
+      <tr>
+        <th rowspan="3" style="max-width: 12rem;">Niveau</th>
+        {{#each wtc as |o|}}
+          <th colspan="4">{{o.label}}</th>
+        {{/each}}
+        <th rowspan="2"></th>
+      </tr>
+
+      <tr>
+        {{#each wtc}}
+          {{#each els as |o|}}
+            <th colspan="2">{{o.label}}</th>
           {{/each}}
-          <td><strong>{{observationsSet.sumOfLevel}}</strong></td>
-        </tr>
-     {{/each}}
+        {{/each}}
+      </tr>
+
+      <tr>
+        {{#each wtc}}
+          {{#each els}}
+            {{#each gender as |o|}}
+              <th>
+                <i class="fa fa-xs fa-{{if (eq o.label "Mannelijk") "male" "female"}}"></i>
+                {{o.label}}
+              </th>
+            {{/each}}
+          {{/each}}
+        {{/each}}
+        <th>Totaal<br>VTE's</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each el as |e|}}
+          <tr>
+            <th style="max-width: 12rem;">{{e.label}}</th>
+            {{#each wtc as |wt|}}
+              {{#each els as |el|}}
+                {{#each gender as |g|}}
+                  <td>
+                    {{input
+                      step=step
+                      type="number"
+                      class="input-field input-field--block"
+                      value=(get (input-mapper obs e wt el g) currentKey)
+                    }}
+
+                  </td>
+                {{/each}}
+              {{/each}}
+            {{/each}}
+            <td>
+              <strong>{{sum-of-row obs e currentKey didChanged}}</strong>
+            </td>
+          </tr>
+      {{/each}}
+      <tr>
+        <th style="max-width: 12rem;">Subtotaal</th>
+        {{#each wtc as |w|}}
+          {{#each els as |e|}}
+            {{#each gender as |o|}}
+              <th>
+                <span class="text-fade">
+                 {{sum-of-column didChanged currentKey obs w e o}}
+                 <i class="fa fa-xs fa-{{if (eq o.label "Mannelijk") "male" "female"}}"></i>
+                 {{o.label}}
+                </span>
+              </th>
+            {{/each}}
+          {{/each}}
+        {{/each}}
+        <th><strong>{{sum-of-column didChanged currentKey obs }}</strong></th>
+      </tr>
+      <tr>
+        <th style="max-width: 12rem;">Subtotaal</th>
+        {{#each wtc as |w|}}
+          {{#each els as |e|}}
+            <th colspan="2">
+              {{sum-of-column didChanged currentKey obs w e }}
+              {{e.label}}
+            </th>
+          {{/each}}
+        {{/each}}
+        <th><strong>{{sum-of-column didChanged currentKey obs }}</strong></th>
+      </tr>
 
       <tr>
         <th style="max-width: 12rem;">Subtotaal</th>
-        <th><span class="text-fade">
-          {{subtotalColumn0}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn1}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn2}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn3}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn4}}<i class="fa fa-xs fa-male"></i> Mannen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn5}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn6}} <i class="fa fa-xs fa-male"></i> Mannen</span></th>
-
-        <th><span class="text-fade">
-          {{subtotalColumn7}} <i class="fa fa-xs fa-female"></i> Vrouwen</span></th>
-
-        <th><strong>
-          {{total}}
-
-        </strong></th>
+          {{#each wtc as |w|}}
+            <th colspan="4" >
+              {{sum-of-column didChanged currentKey obs w }}
+              {{w.label}}
+            </th>
+          {{/each}}
+        <th><strong>{{sum-of-column didChanged currentKey obs }}</strong></th>
       </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Subtotaal</th>
-        <th colspan="2">{{subtotalColumn01}} vastbenoemd</th>
-        <th colspan="2">{{subtotalColumn23}} contractueel</th>
-        <th colspan="2">{{subtotalColumn45}} vastbenoemd</th>
-        <th colspan="2">{{subtotalColumn67}} contractueel</th>
-        <th><strong>{{total}}</strong></th>
-      </tr>
-
-      <tr>
-        <th style="max-width: 12rem;">Totaal</th>
-        <th colspan="4"><strong>{{totalVoltijds}} voltijds</strong></th>
-        <th colspan="4"><strong>{{totalDeeltijds}} deeltijds</strong></th>
-        <th><strong>{{total}}</strong></th>
-      </tr>
+    </tbody>
+</table>

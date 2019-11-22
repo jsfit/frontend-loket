@@ -22,39 +22,39 @@ export default Route.extend({
     });
   },
 
-  setupController(controller/*, model*/) {
+  setupController(controller) {
     this._super(...arguments);
     let totalNumberOfPersons = 0;
-    let totalNumberOfFtes    = 0;
+    let totalNumberOfFtes = 0;
 
-    let personsDeeltijds     = 0;
-    let personsVoltijds      = 0;
+    let personsDeeltijds = 0;
+    let personsVoltijds = 0;
 
-    let ftesDeeltijds        = 0;
-    let ftesVoltijds         = 0;
+    let ftesDeeltijds = 0;
+    let ftesVoltijds = 0;
 
 
 
      this.get('store').peekAll('employee-observation').forEach((obs)=> {
 
-      let nop                 = get(obs, "numberOfPersons");
-      let noftes              = get(obs, "numberOfFtes");
-      let workingTimeCategory = get(obs, "workingTimeCategory.label")
+       let nop = get(obs, "numberOfPersons");
+       let noftes = get(obs, "numberOfFtes");
+       let workingTimeCategory = get(obs, "workingTimeCategory.label")
 
-      nop    = parseInt( nop   ? nop   : 0);
-      noftes = parseInt( noftes? noftes: 0) ;
+       nop = parseInt(nop ? nop : 0);
+       noftes = parseFloat(noftes ? noftes : 0).toFixed(2);
 
-      if( workingTimeCategory === "Deeltijds"){
-        personsDeeltijds += nop;
-        ftesDeeltijds    += noftes;
+       if (workingTimeCategory === "Deeltijds") {
+         personsDeeltijds += nop;
+         ftesDeeltijds += noftes;
 
-      } else {
-        personsVoltijds += nop;
-        ftesVoltijds    += noftes;
-      }
+       } else {
+         personsVoltijds += nop;
+         ftesVoltijds += noftes;
+       }
 
-      totalNumberOfPersons += nop
-      totalNumberOfFtes    += noftes
+       totalNumberOfPersons += nop
+       totalNumberOfFtes += noftes
     });
 
     set(controller, 'totalNumberOfPersons', totalNumberOfPersons);
