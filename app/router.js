@@ -63,7 +63,7 @@ Router.map(function() {
 
   this.route('personeelsdatabank', function() {
     this.route('personeelsaantallen');
-    this.route('voltijdsequivalenten');
+    this.route('voltijdsequivalenten',  { path: '/:slice_id' });
     this.route('aantalwerknemers');
   });
 

@@ -3,10 +3,11 @@ import { set } from '@ember/object';
 
 export default Route.extend({
 
-  model() {
+  model(params) {
+    this.set('slice_id',params.slice_id);
     let queryParams = {
       page: {
-        size: 40,
+        size: 80,
         number: 0
       },
       include: [
@@ -14,9 +15,10 @@ export default Route.extend({
         'educational-level',
         'legal-status',
         'working-time-category',
+        'slice'
       ].join(',')
     };
-    return this.store.query('employee-observation', queryParams)
+    return this.store.query('employee-observation', queryParams);
   },
 
   setupController(controller) {
@@ -25,8 +27,8 @@ export default Route.extend({
     let gender = this.store.peekAll('geslacht-code').sortBy("label");
     let wtc = this.store.peekAll('working-time-category');
     let els = this.store.peekAll('employee-legal-status');
-    let obs = this.store.peekAll('employee-observation');
-
+    let obs = this.store.peekAll('employee-observation').filter(o => o.get("slice.id") === this.get('slice_id'));
+    
     set(controller, 'el', el);
     set(controller, 'wtc', wtc);
     set(controller, 'gender', gender);

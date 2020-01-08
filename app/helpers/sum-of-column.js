@@ -13,6 +13,6 @@ export function sumOfColumn(params) {
     (!g || o.get('sex.id') === g.get('id'))
   ).reduce((a, b, ) => a + parseFloat(b.get(currentKey) ? b.get(currentKey) : 0, 2), 0);
 
-  return currentKey === "numberOfPersons"? parseInt(totals) : totals.toFixed(2);
+  return parseInt(totals); 
 }
 export default helper(sumOfColumn);

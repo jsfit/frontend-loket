@@ -9,7 +9,7 @@ export function sumOfRow(params) {
     o.get('educationalLevel.id') === e.get('id')
   ).reduce((a, b,) =>  a + parseFloat(b.get(currentKey) ? b.get(currentKey): 0), 0);
 
- return  currentKey === "numberOfPersons"? parseInt(totals) : totals.toFixed(2);
+  return parseInt(totals);
 
 }
 

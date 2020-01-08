@@ -7,5 +7,6 @@ export default Model.extend({
   label              : attr(),
 
   bestuursorganen    : belongsTo('bestuursorgaan', { inverse: 'bestuurseenheid' }),
-  employeeObservation: hasMany('employee-observation'),
+  observation: hasMany('employee-observation'),
+  employeeDataset: hasMany('employee-dataset')
 });

@@ -6,66 +6,48 @@ export default Route.extend({
   model() {
     let queryParams = {
       page: {
-        size: 40,
+        size: 80,
         number: 0
       },
       include: [
         'sex',
         'educational-level',
         'legal-status',
-        'working-time-category'
+        'working-time-category',
+        'slice'
       ].join(',')
     };
     return hash({
+      employeePeriodSlice: this.get('store').findAll('employee-period-slice'),
+      employeeDataset: this.get('store').findAll('employee-dataset'),
       employeeObservation: this.store.query('employee-observation', queryParams),
-      employeePeriodSlice: this.get('store').findAll('employee-period-slice')
     });
   },
 
   setupController(controller) {
     this._super(...arguments);
-    let totalNumberOfPersons = 0;
-    let totalNumberOfFtes = 0;
+    let employeePeriodSlice = this.get('store').peekAll('employee-period-slice');
+    employeePeriodSlice.forEach(eps =>{
+      let deeltijds = 0
+      let voltijds = 0
 
-    let personsDeeltijds = 0;
-    let personsVoltijds = 0;
+      eps.get("observation").forEach(obs => {
+        let workingTimeCategory = get(obs, "workingTimeCategory.label");
+        let value =get(obs, "value");
+        value= value ? value : 0;
 
-    let ftesDeeltijds = 0;
-    let ftesVoltijds = 0;
-
-    this.get('store').peekAll('employee-observation').forEach((obs) => {
-
-      let nop = get(obs, "numberOfPersons");
-      let noftes = get(obs, "numberOfFtes");
-      let workingTimeCategory = get(obs, "workingTimeCategory.label")
-
-      nop = parseInt(nop ? nop : 0);
-      noftes = parseFloat(noftes ? noftes : 0);
-      if (workingTimeCategory === "Deeltijds") {
-        personsDeeltijds += nop;
-        ftesDeeltijds += noftes;
-
-      } else {
-        personsVoltijds += nop;
-        ftesVoltijds += noftes;
-      }
-
-      totalNumberOfPersons += nop
-      totalNumberOfFtes += noftes
+        if (workingTimeCategory === "Deeltijds") {
+          deeltijds += value;
+        }else {
+          voltijds += value
+        }
+      });
+      
+      eps.set("totalDeeltijds", deeltijds);
+      eps.set("totalVoltijds", voltijds);
+      eps.set("total", deeltijds + voltijds);
     });
 
-    set(controller, 'totalNumberOfPersons', parseInt(totalNumberOfPersons));
-    set(controller, 'totalNumberOfFtes', totalNumberOfFtes.toFixed(2));
-
-    set(controller, 'ftesWorkingTimeCategory', {
-      voltijds: ftesVoltijds.toFixed(2),
-      deeltijds: ftesDeeltijds.toFixed(2)
-    });
-
-    set(controller, 'personsWorkingTimeCategory', {
-      voltijds: parseInt(personsVoltijds),
-      deeltijds: parseInt(personsDeeltijds)
-    });
-
+    set(controller, 'employeePeriodSlice', employeePeriodSlice);
   }
 });

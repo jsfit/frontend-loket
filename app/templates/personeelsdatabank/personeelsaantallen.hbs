@@ -24,7 +24,7 @@
 	</div>
 	<div class="container-flex--scroll u-padding--round">
 
-  {{#each model.employeePeriodSlice as |eps| }}
+  {{#each employeePeriodSlice as |eps| }}
 	  <div class="u-spacer">
 	    <div class="u-padding--tb--small u-border--light--bottom">
 	      <div class="grid">
@@ -32,49 +32,22 @@
 	          <h2 class="h5 u-spacer--tiny">{{eps.label}}</h2>
 	          <ul class="inline-list inline-list--bordered small">
 	            <li>
-				       		{{totalNumberOfFtes}} VTE's
+				       		{{eps.total}} VTE's
 			        </li>
 	            <li>
-				       		{{ftesWorkingTimeCategory.deeltijds}} Deeltijds
+				       		{{eps.totalDeeltijds}} Deeltijds
 			        </li>
 	            <li>
-				       		{{ftesWorkingTimeCategory.voltijds}} Voltijds
+				       		{{eps.totalVoltijds}} Voltijds
 				      </li>
 	          </ul>
 	        </div>
 	        <div class="col--4-12 col--1-1--m u-align-right--tablet-portrait-up">
-	        	{{#link-to "personeelsdatabank.voltijdsequivalenten" class="button button--small button--narrow u-spacer--tiny"  }}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
+	        	{{#link-to "personeelsdatabank.voltijdsequivalenten" eps.id class="button button--small button--narrow u-spacer--tiny"  }}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
 	        	<p class="text-fade smaller">
 		        	<span>Laatst aangepast op 31.12.2018 </span>
 			        <label class="pill pill--primary-yellow">Aantallen niet actueel</label>
 			      </p>
-		      </div>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="u-spacer">
-	    <div class="u-padding--tb--small u-border--light--bottom">
-	      <div class="grid">
-	        <div class="col--6-12 col--1-1--m">
-	          <h2 class="h5 u-spacer--tiny">{{eps.label}}</h2>
-	          <ul class="inline-list inline-list--bordered small">
-	            <li>
-				       		{{totalNumberOfPersons}} koppen
-			        </li>
-	            <li>
-				       		{{personsWorkingTimeCategory.deeltijds}} Deeltijds
-			        </li>
-	            <li>
-				       		{{personsWorkingTimeCategory.voltijds}} Voltijds
-				      </li>
-	          </ul>
-	        </div>
-	        <div class="col--6-12 col--1-1--m u-align-right--tablet-portrait-up">
-	        	{{#link-to "personeelsdatabank.aantalwerknemers" class="button button--small button--narrow u-spacer--tiny"}}<i class="vi vi-arrow button__icon">&nbsp;</i>Bekijk en bewerk details{{/link-to}}
-	        	<p class="text-fade smaller">
-	          	<span>Laatst aangepast op 25.12.2019 </span>
-	          	<label class="pill">Aantallen actueel</label>
-	          </p>
 		      </div>
 	      </div>
 	    </div>
